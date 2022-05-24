@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+
+  db:
+    build:
+      context: .
+
+    image: digitalmine/adventureworksdw2019:latest
+
+    container_name: "adventureworksdw2019"
+
+    environment:
+      ACCEPT_EULA: "Y"
+      # Note: MSSQL passwords must be at least 8 characters long, contain upper case, lower case and digits.  
+      SA_PASSWORD: 5trongP@55w0rd
+      MSSQL_PID: "Developer" 
+      MSSQL_AGENT_ENABLED: "true"
+
+    volumes:
+      - vol-adventureworksdw2019:/var/opt/mssql
+      # Note: this mounts the local `backup` directory to the container's `backup` directory
+      - ./backup:/var/opt/mssql/backup
+
+    ports:
+      - "1433:1433"
+
+volumes:
+  vol-adventureworksdw2019:
